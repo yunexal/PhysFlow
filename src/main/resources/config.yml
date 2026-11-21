@@ -1,6 +1,6 @@
 # ==============================================================================
-# PhysEx - Finite Water & Lava Physics Configuration (PhysEx Edition)
-# Apply any changes live without restarting the server: /physex reload
+# PhysFlow - Finite Water & Lava Physics Configuration (PhysFlow Edition)
+# Apply any changes live without restarting the server: /physflow reload
 # ==============================================================================
 
 general:
@@ -15,7 +15,7 @@ general:
   async-worker-threads: 2
 
   # Default plugin language (built-in: en, uk, pl, de, es)
-  # Custom language files can also be placed in plugins/PhysEx/lang/<code>.yml
+  # Custom language files can also be placed in plugins/PhysFlow/lang/<code>.yml
   language: en
 
   # Automatically use each player's Minecraft client locale when available,

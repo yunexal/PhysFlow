@@ -1,8 +1,8 @@
-# PhysEx
+# PhysFlow
 
 **Languages:** **English** | [Українська](README.uk.md)
 
-**PhysEx** is a server-side finite water and lava physics plugin for **Paper / Purpur** and **Folia** (`folia-supported: true`, Minecraft **1.16.5 – 26.3**, Java **16+**), developed by **Yunexal**.
+**PhysFlow** is a server-side finite water and lava physics plugin for **Paper / Purpur** and **Folia** (`folia-supported: true`, Minecraft **1.16.5 – 26.3**, Java **16+**), developed by **Yunexal**.
 
 It replaces Minecraft's infinite fluid behavior with volume-conserving finite fluids, gravity, hydrostatic pressure, block/piston displacement, evaporation, and async chunk-snapshot processing.
 
@@ -24,9 +24,9 @@ It replaces Minecraft's infinite fluid behavior with volume-conserving finite fl
   - Three water–lava reaction modes (`water-lava-interaction.mode`): `PHYSEX_EVAPORATE`, `CONSUME_WATER_STONE`, `VANILLA`.
   - Melting ice triggers finite simulated water (`melting-ice-creates-finite-water`), and `unfreeze-marine-flora-on-drain` clears underwater kelp/seagrass walls during draining.
 - **Multi-Language Support (i18n)**:
-  - Built-in locales: English (`en`, default), Ukrainian (`uk`), Polish (`pl`), German (`de`), and Spanish (`es`) in `plugins/PhysEx/lang/<code>.yml`.
+  - Built-in locales: English (`en`, default), Ukrainian (`uk`), Polish (`pl`), German (`de`), and Spanish (`es`) in `plugins/PhysFlow/lang/<code>.yml`.
   - Automatic per-player client locale detection (`general.per-player-locale: true`) with configurable default fallback (`general.language: en`).
-  - Drop any custom `<code>.yml` file into `plugins/PhysEx/lang/` to add a new language.
+  - Drop any custom `<code>.yml` file into `plugins/PhysFlow/lang/` to add a new language.
 - **Background Async Processing & Native Folia Multithreading**:
   - Automatic runtime detection (`Paper/Purpur` or `Folia (Regionized)`).
   - By default (`general.async-processing: true`), fluid math, spreading checks, and hydrostatic pressure BFS run on dedicated worker threads (`general.async-worker-threads`) over immutable `ChunkSnapshot` overlays; only verified `BlockData` diffs are applied back on the main/region thread with strict volume conservation.
@@ -44,35 +44,35 @@ It replaces Minecraft's infinite fluid behavior with volume-conserving finite fl
 
 ## Installation & Building
 
-1. Download or build `PhysEx.jar` and place it into your server's `plugins/` folder.
-2. Restart the server to generate `plugins/PhysEx/config.yml` and `plugins/PhysEx/lang/*.yml`.
+1. Download or build `PhysFlow.jar` and place it into your server's `plugins/` folder.
+2. Restart the server to generate `plugins/PhysFlow/config.yml` and `plugins/PhysFlow/lang/*.yml`.
 
 ### Build from Source
 
 ```bash
-git clone https://github.com/yunexal/PhysEx.git
-cd PhysEx
+git clone https://github.com/yunexal/PhysFlow.git
+cd PhysFlow
 mvn package
 ```
 
-Output artifact: `target/PhysEx.jar`.
+Output artifact: `target/PhysFlow.jar`.
 
 ---
 
 ## Commands & Permissions
 
-- **Permission:** `physex.admin` (default: `op`)
-- **Command:** `/physex` (aliases: `/pe`, `/fluidphysics`, `/fluids`)
+- **Permission:** `physflow.admin` (default: `op`)
+- **Command:** `/physflow` (aliases: `/pe`, `/fluidphysics`, `/fluids`)
 
 | Command | Description |
 | :--- | :--- |
-| `/physex status` | Show detected runtime (`Paper/Purpur` or `Folia`), simulation state, TPS, last tick duration, queue sizes, and active modes. |
-| `/physex reload` | Reload `config.yml` and `lang/*.yml` live without restarting. |
-| `/physex pause` / `/physex resume` | Pause or resume fluid simulation. |
-| `/physex clearqueue` | Clear all pending fluid update queues. |
-| `/physex drain <radius 1..32> [water\|lava]` | Drain fluid within the given radius around the player. |
-| `/physex fill <radius 1..32> [water\|lava]` | Fill an area around the player with water or lava. |
-| `/physex set <key> <value>` | Update and save a `config.yml` option live (e.g. `/physex set general.language uk`). |
+| `/physflow status` | Show detected runtime (`Paper/Purpur` or `Folia`), simulation state, TPS, last tick duration, queue sizes, and active modes. |
+| `/physflow reload` | Reload `config.yml` and `lang/*.yml` live without restarting. |
+| `/physflow pause` / `/physflow resume` | Pause or resume fluid simulation. |
+| `/physflow clearqueue` | Clear all pending fluid update queues. |
+| `/physflow drain <radius 1..32> [water\|lava]` | Drain fluid within the given radius around the player. |
+| `/physflow fill <radius 1..32> [water\|lava]` | Fill an area around the player with water or lava. |
+| `/physflow set <key> <value>` | Update and save a `config.yml` option live (e.g. `/physflow set general.language uk`). |
 
 ---
 

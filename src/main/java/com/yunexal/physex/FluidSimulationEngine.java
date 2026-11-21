@@ -46,7 +46,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
- * Core finite fluid simulation engine for PhysEx.
+ * Core finite fluid simulation engine for PhysFlow.
  * Dual-mode architecture (Paper/Purpur + Folia) with background async solving:
  * - Stage 1 (Tick/Region thread): fast ChunkSnapshot capture for active queued chunks.
  * - Stage 2 (Background worker pool): full finite fluid math, pressure BFS, collisions & diff planning.
@@ -145,7 +145,7 @@ public class FluidSimulationEngine {
         AtomicInteger threadNum = new AtomicInteger(1);
         configuredWorkerCount = desired;
         asyncExecutor = Executors.newFixedThreadPool(desired, r -> {
-            Thread t = new Thread(r, "PhysEx-Worker-" + threadNum.getAndIncrement());
+            Thread t = new Thread(r, "PhysFlow-Worker-" + threadNum.getAndIncrement());
             t.setDaemon(true);
             return t;
         });

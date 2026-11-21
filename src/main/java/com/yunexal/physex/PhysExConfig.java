@@ -8,7 +8,7 @@ import java.util.Locale;
 import java.util.Set;
 
 /**
- * Strongly-typed configuration holder for PhysEx with live reload & CLI mutation support.
+ * Strongly-typed configuration holder for PhysFlow with live reload & CLI mutation support.
  */
 public class PhysExConfig {
 

@@ -1,8 +1,8 @@
-# PhysEx
+# PhysFlow
 
 **Мови:** [English](README.md) | **Українська**
 
-**PhysEx** — серверний плагін скінченної фізики води та лави для **Paper / Purpur** і **Folia** (`folia-supported: true`, Minecraft **1.16.5 – 26.3**, Java **16+**) від **Yunexal**.
+**PhysFlow** — серверний плагін скінченної фізики води та лави для **Paper / Purpur** і **Folia** (`folia-supported: true`, Minecraft **1.16.5 – 26.3**, Java **16+**) від **Yunexal**.
 
 ---
 
@@ -22,9 +22,9 @@
   - Три режими реакції води й лави (`water-lava-interaction.mode`): `PHYSEX_EVAPORATE`, `CONSUME_WATER_STONE`, `VANILLA`.
   - Танення льоду активує фізичну воду (`melting-ice-creates-finite-water`), а `unfreeze-marine-flora-on-drain` розморожує підводну флору під час дренажу.
 - **Багатомовність (i18n)**:
-  - Вбудовані мови: англійська (`en`, за замовчуванням), українська (`uk`), польська (`pl`), німецька (`de`) та іспанська (`es`) у `plugins/PhysEx/lang/<code>.yml`.
+  - Вбудовані мови: англійська (`en`, за замовчуванням), українська (`uk`), польська (`pl`), німецька (`de`) та іспанська (`es`) у `plugins/PhysFlow/lang/<code>.yml`.
   - Автовизначення локалі клієнта для кожного гравця (`general.per-player-locale: true`) із резервною мовою сервера (`general.language: en`).
-  - Підтримка власних перекладів через додавання файлу `<code>.yml` у `plugins/PhysEx/lang/`.
+  - Підтримка власних перекладів через додавання файлу `<code>.yml` у `plugins/PhysFlow/lang/`.
 - **Фонова асинхронна обробка, захист TPS і підтримка Folia**:
   - Автоматичне визначення середовища (`Paper/Purpur` або `Folia (Regionized)`).
   - За замовчуванням (`general.async-processing: true`) важкі обчислення фізики, перетікання й BFS гідростатичного тиску виконуються у фонових робочих потоках (`general.async-worker-threads`) поверх незмінних `ChunkSnapshot`, а на основний/регіональний потік повертаються лише мінімальні перевірені зміни `BlockData` із суворим збереженням об'єму.
@@ -35,28 +35,28 @@
 
 ## Встановлення та збірка
 
-1. Помістіть `PhysEx.jar` у папку `plugins/` вашого сервера **Paper / Purpur / Folia 1.16.5 – 26.3** (Java 16+).
-2. Перезапустіть сервер — у `plugins/PhysEx/` буде створено `config.yml` і каталог мов `lang/*.yml`.
+1. Помістіть `PhysFlow.jar` у папку `plugins/` вашого сервера **Paper / Purpur / Folia 1.16.5 – 26.3** (Java 16+).
+2. Перезапустіть сервер — у `plugins/PhysFlow/` буде створено `config.yml` і каталог мов `lang/*.yml`.
 3. Збірка з вихідного коду:
    ```bash
    mvn package
    ```
-   Готовий JAR: `target/PhysEx.jar`.
+   Готовий JAR: `target/PhysFlow.jar`.
 
 ---
 
 ## Команди та права
 
-Право доступу: `physex.admin` (за замовчуванням `op`).  
-Аліаси команди `/physex`: `/pe`, `/fluidphysics`, `/fluids`.
+Право доступу: `physflow.admin` (за замовчуванням `op`).  
+Аліаси команди `/physflow`: `/pe`, `/fluidphysics`, `/fluids`.
 
-- `/physex status` — платформа (`Paper/Purpur` або `Folia (Regionized)`), стан симуляції, TPS, час останнього тіку, розмір черги води/лави та активні режими.
-- `/physex reload` — перезавантажити `config.yml` і файли `lang/*.yml` без перезапуску сервера.
-- `/physex pause` / `/physex resume` — призупинити або відновити симуляцію рідин.
-- `/physex clearqueue` — очистити поточні черги активних потоків.
-- `/physex drain <радіус 1..32> [water|lava]` — осушити рідини в заданому радіусі навколо гравця.
-- `/physex fill <радіус 1..32> [water|lava]` — заповнити область водою або лавою.
-- `/physex set <ключ> <значення>` — змінити параметр `config.yml` на льоту зі збереженням (наприклад, `/physex set general.language uk` або `/physex set water.finite-mode false`).
+- `/physflow status` — платформа (`Paper/Purpur` або `Folia (Regionized)`), стан симуляції, TPS, час останнього тіку, розмір черги води/лави та активні режими.
+- `/physflow reload` — перезавантажити `config.yml` і файли `lang/*.yml` без перезапуску сервера.
+- `/physflow pause` / `/physflow resume` — призупинити або відновити симуляцію рідин.
+- `/physflow clearqueue` — очистити поточні черги активних потоків.
+- `/physflow drain <радіус 1..32> [water|lava]` — осушити рідини в заданому радіусі навколо гравця.
+- `/physflow fill <радіус 1..32> [water|lava]` — заповнити область водою або лавою.
+- `/physflow set <ключ> <значення>` — змінити параметр `config.yml` на льоту зі збереженням (наприклад, `/physflow set general.language uk` або `/physflow set water.finite-mode false`).
 
 ---
 

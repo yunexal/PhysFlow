@@ -43,12 +43,12 @@ public class PhysExCommand implements CommandExecutor, TabCompleter {
 
     private static final List<String> LANGUAGE_CODES = List.of("en", "uk", "pl", "de", "es");
 
-    private final PhysExPlugin plugin;
+    private final PhysFlowPlugin plugin;
     private final PhysExConfig config;
     private final MessageManager messages;
     private final FluidSimulationEngine engine;
 
-    public PhysExCommand(PhysExPlugin plugin, PhysExConfig config, MessageManager messages, FluidSimulationEngine engine) {
+    public PhysExCommand(PhysFlowPlugin plugin, PhysExConfig config, MessageManager messages, FluidSimulationEngine engine) {
         this.plugin = plugin;
         this.config = config;
         this.messages = messages;
@@ -57,7 +57,7 @@ public class PhysExCommand implements CommandExecutor, TabCompleter {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (!sender.hasPermission("physex.admin")) {
+        if (!sender.hasPermission("physflow.admin")) {
             messages.send(sender, "no-permission");
             return true;
         }
@@ -227,7 +227,7 @@ public class PhysExCommand implements CommandExecutor, TabCompleter {
 
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
-        if (!sender.hasPermission("physex.admin")) {
+        if (!sender.hasPermission("physflow.admin")) {
             return Collections.emptyList();
         }
         if (args.length == 1) {

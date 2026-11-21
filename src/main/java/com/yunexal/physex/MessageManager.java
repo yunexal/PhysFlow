@@ -18,7 +18,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Multi-language message loader supporting built-in locales (en, uk, pl, de, es),
- * custom user YAML files in plugins/PhysEx/lang/, and automatic per-player locale lookup.
+ * custom user YAML files in plugins/PhysFlow/lang/, and automatic per-player locale lookup.
  */
 public final class MessageManager {
 

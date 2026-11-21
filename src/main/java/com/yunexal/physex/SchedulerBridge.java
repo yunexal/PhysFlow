@@ -9,8 +9,8 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitTask;
 
 /**
- * Dual-platform scheduler bridge supporting both traditional Paper/Purpur
- * and regionized multithreaded Folia servers cleanly.
+ * Dual-platform scheduler bridge supporting both traditional Paper/Purpur/Spigot
+ * (1.16.5 - 26.3+) and regionized multithreaded Folia servers cleanly.
  */
 public final class SchedulerBridge {
 
@@ -32,11 +32,18 @@ public final class SchedulerBridge {
         return FOLIA;
     }
 
+    public static boolean isOwnedByCurrentRegion(World world, int chunkX, int chunkZ) {
+        if (!FOLIA) {
+            return Bukkit.isPrimaryThread();
+        }
+        return FoliaSchedulerHelper.isOwnedByCurrentRegion(world, chunkX, chunkZ);
+    }
+
     public static boolean canAccessBlockNow(World world, int blockX, int blockZ) {
         if (!FOLIA) {
             return Bukkit.isPrimaryThread();
         }
-        return Bukkit.isOwnedByCurrentRegion(world, blockX >> 4, blockZ >> 4);
+        return FoliaSchedulerHelper.isOwnedByCurrentRegion(world, blockX >> 4, blockZ >> 4);
     }
 
     public static void runTask(Plugin plugin, Runnable task) {
@@ -44,7 +51,7 @@ public final class SchedulerBridge {
             Bukkit.getScheduler().runTask(plugin, task);
             return;
         }
-        Bukkit.getGlobalRegionScheduler().execute(plugin, task);
+        FoliaSchedulerHelper.runGlobal(plugin, task);
     }
 
     public static void runAtRegion(Plugin plugin, World world, int chunkX, int chunkZ, Runnable task) {
@@ -52,7 +59,7 @@ public final class SchedulerBridge {
             Bukkit.getScheduler().runTask(plugin, task);
             return;
         }
-        Bukkit.getRegionScheduler().execute(plugin, world, chunkX, chunkZ, task);
+        FoliaSchedulerHelper.runRegion(plugin, world, chunkX, chunkZ, task);
     }
 
     public static void runAtBlockLater(Plugin plugin, Block block, Runnable task, long delayTicks) {
@@ -61,14 +68,7 @@ public final class SchedulerBridge {
             Bukkit.getScheduler().runTaskLater(plugin, task, safeDelay);
             return;
         }
-        Bukkit.getRegionScheduler().runDelayed(
-                plugin,
-                block.getWorld(),
-                block.getX() >> 4,
-                block.getZ() >> 4,
-                scheduled -> task.run(),
-                safeDelay
-        );
+        FoliaSchedulerHelper.runRegionDelayed(plugin, block.getWorld(), block.getX() >> 4, block.getZ() >> 4, task, safeDelay);
     }
 
     public static void runAtRegionDelayed(Plugin plugin, World world, int chunkX, int chunkZ, Runnable task, long delayTicks) {
@@ -77,7 +77,7 @@ public final class SchedulerBridge {
             Bukkit.getScheduler().runTaskLater(plugin, task, safeDelay);
             return;
         }
-        Bukkit.getRegionScheduler().runDelayed(plugin, world, chunkX, chunkZ, scheduled -> task.run(), safeDelay);
+        FoliaSchedulerHelper.runRegionDelayed(plugin, world, chunkX, chunkZ, task, safeDelay);
     }
 
     public static void runAtLocation(Plugin plugin, Location loc, Runnable task) {
@@ -95,7 +95,7 @@ public final class SchedulerBridge {
             Bukkit.getScheduler().runTask(plugin, task);
             return;
         }
-        entity.getScheduler().run(plugin, scheduled -> task.run(), null);
+        FoliaSchedulerHelper.runEntity(plugin, entity, task);
     }
 
     public static CancellableTask runGlobalAtFixedRate(Plugin plugin, Runnable task, long initialDelay, long period) {
@@ -105,8 +105,7 @@ public final class SchedulerBridge {
             BukkitTask bt = Bukkit.getScheduler().runTaskTimer(plugin, task, safeInit, safePeriod);
             return bt::cancel;
         }
-        var ft = Bukkit.getGlobalRegionScheduler().runAtFixedRate(plugin, scheduled -> task.run(), safeInit, safePeriod);
-        return ft::cancel;
+        return FoliaSchedulerHelper.runGlobalAtFixedRate(plugin, task, safeInit, safePeriod);
     }
 
     public interface CancellableTask {

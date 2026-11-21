@@ -119,7 +119,7 @@ public final class MessageManager {
 
     private String resolveLocaleFor(CommandSender sender) {
         if (config.perPlayerLocale && sender instanceof Player player) {
-            String normalized = normalizeCode(player.locale().toString());
+            String normalized = normalizeCode(VersionCompat.getPlayerLocale(player));
             if (bundles.containsKey(normalized)) {
                 return normalized;
             }

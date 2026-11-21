@@ -2,7 +2,7 @@
 
 **Languages:** **English** | [Українська](README.uk.md)
 
-**PhysEx** is a server-side finite water and lava physics plugin for **Paper / Purpur** and **Folia** (`folia-supported: true`, Minecraft **1.21+**, Java 21), developed by **Yunexal**.
+**PhysEx** is a server-side finite water and lava physics plugin for **Paper / Purpur** and **Folia** (`folia-supported: true`, Minecraft **1.16.5 – 26.3**, Java **16+**), developed by **Yunexal**.
 
 It replaces Minecraft's infinite fluid behavior with volume-conserving finite fluids, gravity, hydrostatic pressure, block/piston displacement, evaporation, and async chunk-snapshot processing.
 
@@ -37,8 +37,8 @@ It replaces Minecraft's infinite fluid behavior with volume-conserving finite fl
 
 ## Requirements
 
-- **Server:** Paper, Purpur, or Folia **1.21+**
-- **Java:** **21** or newer
+- **Server:** Paper, Purpur, or Folia **1.16.5 – 26.3**
+- **Java:** **16** or newer (runs on Java 16, 17, 21+)
 
 ---
 

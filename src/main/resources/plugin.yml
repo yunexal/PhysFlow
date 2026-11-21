@@ -1,7 +1,7 @@
 name: PhysEx
 version: 1.0.0
 main: com.yunexal.physex.PhysExPlugin
-api-version: '1.21'
+api-version: '1.16'
 folia-supported: true
 author: Nestor_Churin
 description: Server-side finite water & lava physics overhaul inspired by PhysEx (gravity, hydrostatic pressure, displacement, evaporation, piston push)

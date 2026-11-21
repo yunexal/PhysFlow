@@ -348,12 +348,12 @@ public class FluidListeners implements Listener {
         if (!config.isWorldEnabled(event.getBlock().getWorld())) {
             return;
         }
-        if (event.getReason() != CauldronLevelChangeEvent.ChangeReason.NATURAL_FILL) {
+        if (!"NATURAL_FILL".equals(event.getReason().name())) {
             return;
         }
         Material nextMat = event.getNewState().getType();
-        if ((nextMat == Material.WATER_CAULDRON && config.waterDisableDripstone)
-                || (nextMat == Material.LAVA_CAULDRON && config.lavaDisableDripstone)) {
+        if ((VersionCompat.WATER_CAULDRON != null && nextMat == VersionCompat.WATER_CAULDRON && config.waterDisableDripstone)
+                || (VersionCompat.LAVA_CAULDRON != null && nextMat == VersionCompat.LAVA_CAULDRON && config.lavaDisableDripstone)) {
             event.setCancelled(true);
         }
     }

@@ -231,7 +231,7 @@ final class AsyncFluidBatch {
 
     private static boolean verifyGroup(World world, TransactionGroup group) {
         for (SimCell cell : group.mutations) {
-            if (cell.y < world.getMinHeight() || cell.y >= world.getMaxHeight()) {
+            if (cell.y < VersionCompat.getMinHeight(world) || cell.y >= world.getMaxHeight()) {
                 return false;
             }
             if (!world.isChunkLoaded(cell.x >> 4, cell.z >> 4) || !SchedulerBridge.canAccessBlockNow(world, cell.x, cell.z)) {

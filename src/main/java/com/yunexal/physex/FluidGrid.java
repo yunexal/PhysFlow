@@ -23,18 +23,19 @@ import java.util.Set;
  */
 interface FluidGrid {
 
-    Set<Material> FRAGILE_BREAKABLE = Set.of(
-            Material.SHORT_GRASS, Material.TALL_GRASS, Material.FERN, Material.LARGE_FERN,
-            Material.DEAD_BUSH, Material.DANDELION, Material.POPPY, Material.BLUE_ORCHID,
-            Material.ALLIUM, Material.AZURE_BLUET, Material.RED_TULIP, Material.ORANGE_TULIP,
-            Material.WHITE_TULIP, Material.PINK_TULIP, Material.OXEYE_DAISY, Material.CORNFLOWER,
-            Material.LILY_OF_THE_VALLEY, Material.TORCH, Material.WALL_TORCH, Material.SOUL_TORCH,
-            Material.SOUL_WALL_TORCH, Material.REDSTONE_TORCH, Material.REDSTONE_WALL_TORCH,
-            Material.REDSTONE_WIRE, Material.SNOW, Material.COBWEB, Material.WHEAT,
-            Material.CARROTS, Material.POTATOES, Material.BEETROOTS, Material.SUGAR_CANE,
-            Material.FIRE, Material.SOUL_FIRE, Material.VINE, Material.GLOW_LICHEN,
-            Material.PINK_PETALS, Material.BROWN_MUSHROOM,
-            Material.RED_MUSHROOM, Material.CRIMSON_FUNGUS, Material.WARPED_FUNGUS
+    Set<Material> FRAGILE_BREAKABLE = VersionCompat.materialSet(
+            "SHORT_GRASS", "GRASS", "TALL_GRASS", "FERN", "LARGE_FERN",
+            "DEAD_BUSH", "DANDELION", "POPPY", "BLUE_ORCHID",
+            "ALLIUM", "AZURE_BLUET", "RED_TULIP", "ORANGE_TULIP",
+            "WHITE_TULIP", "PINK_TULIP", "OXEYE_DAISY", "CORNFLOWER",
+            "LILY_OF_THE_VALLEY", "TORCH", "WALL_TORCH", "SOUL_TORCH",
+            "SOUL_WALL_TORCH", "REDSTONE_TORCH", "REDSTONE_WALL_TORCH",
+            "REDSTONE_WIRE", "SNOW", "COBWEB", "WHEAT",
+            "CARROTS", "POTATOES", "BEETROOTS", "SUGAR_CANE",
+            "FIRE", "SOUL_FIRE", "VINE", "GLOW_LICHEN",
+            "PINK_PETALS", "BROWN_MUSHROOM",
+            "RED_MUSHROOM", "CRIMSON_FUNGUS", "WARPED_FUNGUS",
+            "LEAF_LITTER", "WILDFLOWERS", "BUSH", "FIREFLY_BUSH"
     );
 
     Set<Material> MARINE_FLORA = Set.of(

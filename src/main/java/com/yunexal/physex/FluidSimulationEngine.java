@@ -293,7 +293,7 @@ public class FluidSimulationEngine {
         if (kind == FluidKind.LAVA && (!config.lavaEnabled || !config.lavaFiniteMode)) {
             return;
         }
-        if (y < world.getMinHeight() || y >= world.getMaxHeight()) {
+        if (y < VersionCompat.getMinHeight(world) || y >= world.getMaxHeight()) {
             return;
         }
 
@@ -453,7 +453,7 @@ public class FluidSimulationEngine {
                 if (!world.isChunkLoaded(ncx, ncz)) {
                     continue;
                 }
-                if (Bukkit.isOwnedByCurrentRegion(world, ncx, ncz)) {
+                if (SchedulerBridge.isOwnedByCurrentRegion(world, ncx, ncz)) {
                     snapshots.put(ck, world.getChunkAt(ncx, ncz).getChunkSnapshot(false, false, includeTemp, false));
                 } else {
                     unowned.add(ck);
@@ -463,7 +463,7 @@ public class FluidSimulationEngine {
 
         WorldSnapshotContext ctx = new WorldSnapshotContext(
                 world.getEnvironment() == World.Environment.NETHER,
-                world.getMinHeight(),
+                VersionCompat.getMinHeight(world),
                 world.getMaxHeight(),
                 snapshots,
                 unowned
@@ -560,7 +560,7 @@ public class FluidSimulationEngine {
     }
 
     private void enqueueBothIfFluidOrOpen(World w, int x, int y, int z) {
-        if (y < w.getMinHeight() || y >= w.getMaxHeight() || !w.isChunkLoaded(x >> 4, z >> 4)) {
+        if (y < VersionCompat.getMinHeight(w) || y >= w.getMaxHeight() || !w.isChunkLoaded(x >> 4, z >> 4)) {
             return;
         }
         if (SchedulerBridge.isFolia() && !SchedulerBridge.canAccessBlockNow(w, x, z)) {
@@ -578,7 +578,7 @@ public class FluidSimulationEngine {
                 int nx = x + DX6[i];
                 int ny = y + DY6[i];
                 int nz = z + DZ6[i];
-                if (ny < w.getMinHeight() || ny >= w.getMaxHeight() || !w.isChunkLoaded(nx >> 4, nz >> 4)) {
+                if (ny < VersionCompat.getMinHeight(w) || ny >= w.getMaxHeight() || !w.isChunkLoaded(nx >> 4, nz >> 4)) {
                     continue;
                 }
                 if (SchedulerBridge.isFolia() && !SchedulerBridge.canAccessBlockNow(w, nx, nz)) {
@@ -591,7 +591,7 @@ public class FluidSimulationEngine {
     }
 
     private void wakeCellIfFluid(World w, int x, int y, int z) {
-        if (y < w.getMinHeight() || y >= w.getMaxHeight() || !w.isChunkLoaded(x >> 4, z >> 4)) {
+        if (y < VersionCompat.getMinHeight(w) || y >= w.getMaxHeight() || !w.isChunkLoaded(x >> 4, z >> 4)) {
             return;
         }
         Block nb = w.getBlockAt(x, y, z);
@@ -691,7 +691,7 @@ public class FluidSimulationEngine {
             paperInFlightItems.put(wid, batch);
             WorldSnapshotContext ctx = new WorldSnapshotContext(
                     world.getEnvironment() == World.Environment.NETHER,
-                    world.getMinHeight(),
+                    VersionCompat.getMinHeight(world),
                     world.getMaxHeight(),
                     snapshots,
                     Set.of()
@@ -753,7 +753,7 @@ public class FluidSimulationEngine {
             int x = LongPosSetQueue.unpackX(packed);
             int y = LongPosSetQueue.unpackY(packed);
             int z = LongPosSetQueue.unpackZ(packed);
-            if (y < world.getMinHeight() || y >= world.getMaxHeight()) {
+            if (y < VersionCompat.getMinHeight(world) || y >= world.getMaxHeight()) {
                 continue;
             }
             int cx = x >> 4;
@@ -853,7 +853,7 @@ public class FluidSimulationEngine {
             int x = LongPosSetQueue.unpackX(packed);
             int y = LongPosSetQueue.unpackY(packed);
             int z = LongPosSetQueue.unpackZ(packed);
-            if (y < world.getMinHeight() || y >= world.getMaxHeight() || !world.isChunkLoaded(x >> 4, z >> 4)) {
+            if (y < VersionCompat.getMinHeight(world) || y >= world.getMaxHeight() || !world.isChunkLoaded(x >> 4, z >> 4)) {
                 continue;
             }
             if (simulateStep(liveGrid, x, y, z, kind)) {
@@ -1320,7 +1320,7 @@ public class FluidSimulationEngine {
                     if (!SchedulerBridge.canAccessBlockNow(w, nx, nz) || !w.isChunkLoaded(nx >> 4, nz >> 4)) {
                         continue;
                     }
-                    int dyStart = Math.max(w.getMinHeight(), oy);
+                    int dyStart = Math.max(VersionCompat.getMinHeight(w), oy);
                     int dyEnd = Math.min(w.getMaxHeight() - 1, oy + r);
                     for (int y = dyStart; y <= dyEnd && remaining > 0; y++) {
                         Block target = w.getBlockAt(nx, y, nz);
@@ -1361,7 +1361,7 @@ public class FluidSimulationEngine {
         int totalFound = 0;
         for (int dy = -1; dy <= 1; dy++) {
             int y = cy + dy;
-            if (y < w.getMinHeight() || y >= w.getMaxHeight()) {
+            if (y < VersionCompat.getMinHeight(w) || y >= w.getMaxHeight()) {
                 continue;
             }
             for (int dx = -2; dx <= 2; dx++) {
@@ -1395,7 +1395,7 @@ public class FluidSimulationEngine {
         for (int radius = 1; radius <= 2 && left > 0; radius++) {
             for (int dy = 1; dy >= -1 && left > 0; dy--) {
                 int y = cy + dy;
-                if (y < w.getMinHeight() || y >= w.getMaxHeight()) {
+                if (y < VersionCompat.getMinHeight(w) || y >= w.getMaxHeight()) {
                     continue;
                 }
                 for (int dx = -radius; dx <= radius && left > 0; dx++) {
@@ -1470,7 +1470,7 @@ public class FluidSimulationEngine {
                     int xEnd = Math.min(cx + radius, (chunkX << 4) + 15);
                     int zStart = Math.max(cz - radius, chunkZ << 4);
                     int zEnd = Math.min(cz + radius, (chunkZ << 4) + 15);
-                    int yStart = Math.max(w.getMinHeight(), cy - radius);
+                    int yStart = Math.max(VersionCompat.getMinHeight(w), cy - radius);
                     int yEnd = Math.min(w.getMaxHeight() - 1, drain ? cy + radius : cy);
 
                     for (int x = xStart; x <= xEnd; x++) {
@@ -1780,7 +1780,7 @@ public class FluidSimulationEngine {
 
         @Override
         public int minY() {
-            return world.getMinHeight();
+            return VersionCompat.getMinHeight(world);
         }
 
         @Override
@@ -1795,14 +1795,14 @@ public class FluidSimulationEngine {
 
         @Override
         public boolean canAccess(int x, int y, int z) {
-            return y >= world.getMinHeight() && y < world.getMaxHeight()
+            return y >= VersionCompat.getMinHeight(world) && y < world.getMaxHeight()
                     && world.isChunkLoaded(x >> 4, z >> 4)
                     && SchedulerBridge.canAccessBlockNow(world, x, z);
         }
 
         @Override
         public boolean isUnownedCrossRegion(int x, int y, int z) {
-            return y >= world.getMinHeight() && y < world.getMaxHeight()
+            return y >= VersionCompat.getMinHeight(world) && y < world.getMaxHeight()
                     && world.isChunkLoaded(x >> 4, z >> 4)
                     && !SchedulerBridge.canAccessBlockNow(world, x, z);
         }

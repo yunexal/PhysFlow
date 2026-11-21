@@ -2,7 +2,7 @@
 
 **Мови:** [English](README.md) | **Українська**
 
-**PhysEx** — серверний плагін скінченної фізики води та лави для **Paper / Purpur** і **Folia** (`folia-supported: true`, Minecraft **1.21+**, Java 21) від **Yunexal**.
+**PhysEx** — серверний плагін скінченної фізики води та лави для **Paper / Purpur** і **Folia** (`folia-supported: true`, Minecraft **1.16.5 – 26.3**, Java **16+**) від **Yunexal**.
 
 ---
 
@@ -35,7 +35,7 @@
 
 ## Встановлення та збірка
 
-1. Помістіть `PhysEx.jar` у папку `plugins/` вашого сервера **Paper / Purpur / Folia 1.21+** (Java 21).
+1. Помістіть `PhysEx.jar` у папку `plugins/` вашого сервера **Paper / Purpur / Folia 1.16.5 – 26.3** (Java 16+).
 2. Перезапустіть сервер — у `plugins/PhysEx/` буде створено `config.yml` і каталог мов `lang/*.yml`.
 3. Збірка з вихідного коду:
    ```bash

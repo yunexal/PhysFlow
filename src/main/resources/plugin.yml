@@ -1,0 +1,19 @@
+name: PhysEx
+version: 1.0.0
+main: com.yunexal.physex.PhysExPlugin
+api-version: '1.21'
+folia-supported: true
+author: Nestor_Churin
+description: Server-side finite water & lava physics overhaul inspired by PhysEx (gravity, hydrostatic pressure, displacement, evaporation, piston push)
+
+commands:
+  physex:
+    description: Manage and configure PhysEx finite water and lava physics
+    usage: /<command> <status|reload|pause|resume|clearqueue|drain|fill|set>
+    aliases: [pe, fluidphysics, fluids]
+    permission: physex.admin
+
+permissions:
+  physex.admin:
+    description: Full access to PhysEx administrative commands and live config reload
+    default: op

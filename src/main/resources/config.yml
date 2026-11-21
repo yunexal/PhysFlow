@@ -1,0 +1,146 @@
+# ==============================================================================
+# PhysEx - Finite Water & Lava Physics Configuration (PhysEx Edition)
+# Apply any changes live without restarting the server: /physex reload
+# ==============================================================================
+
+general:
+  # Enable or disable fluid physics simulation globally
+  enabled: true
+
+  # Process heavy fluid physics (gravity checks, spreading, pressure BFS) on background worker threads
+  # using immutable ChunkSnapshots; only minimal block diffs are applied on the main/region thread
+  async-processing: true
+
+  # Number of background daemon threads for fluid simulation (1..16)
+  async-worker-threads: 2
+
+  # Default plugin language (built-in: en, uk, pl, de, es)
+  # Custom language files can also be placed in plugins/PhysEx/lang/<code>.yml
+  language: en
+
+  # Automatically use each player's Minecraft client locale when available,
+  # falling back to general.language
+  per-player-locale: true
+
+  # World whitelist (empty [] = active in ALL worlds unless blacklisted)
+  worlds-whitelist: []
+
+  # Worlds where fluid physics is disabled (e.g., hub or minigame worlds)
+  worlds-blacklist: []
+
+  # Maximum CPU time (milliseconds) allowed for fluid updates per server tick
+  # Protects TPS when breaching oceans or large underground reservoirs
+  max-tick-time-ms: 4.5
+
+  # Maximum number of fluid block updates processed per tick within the time budget
+  max-updates-per-tick: 900
+
+  # Maximum size of the active update queue (memory safety limit)
+  max-queue-size: 160000
+
+  # Automatically throttle fluid simulation if TPS drops below this threshold
+  min-tps-threshold: 17.5
+
+  # Persist pending fluid queues to disk on shutdown and restore on startup
+  persist-queue-on-shutdown: true
+
+  # Convert underwater flora (SEAGRASS/KELP) cleanly when surrounding water drains
+  # so they do not form immobile floating water walls
+  unfreeze-marine-flora-on-drain: true
+
+water:
+  enabled: true
+  # Simulation interval in ticks (1 = 20 times/sec, 2 = 10 times/sec)
+  tick-interval: 2
+
+  # Disable vanilla infinite 2x2 water sources (true finite volume conservation)
+  finite-mode: true
+
+  # Gravity-driven downward flow through air and replaceable blocks
+  gravity-enabled: true
+
+  # Horizontal surface level equalization
+  equalize-enabled: true
+
+  # Minimum level difference (1..7) required for water to spread sideways
+  # 2 prevents 1/8 puddles from flattening out infinitely across flat ground
+  min-spread-difference: 2
+
+  # Hydrostatic pressure (U-pipes, pressurized gushing from bottom breaches)
+  pressure-enabled: true
+  pressure-max-depth: 20
+  pressure-max-visited: 140
+
+  # Displace water upward/outward when solid blocks are placed inside it
+  displace-on-block-place: true
+
+  # Pistons push water volumes instead of deleting them
+  displace-on-piston: true
+
+  # Allow flowing water to fill empty waterloggable blocks (stairs, slabs, fences, trapdoors)
+  waterlog-capable-blocks: true
+
+  # Break fragile blocks (grass, flowers, saplings, torches, redstone) when flooded
+  break-fragile-blocks: true
+
+  # Filling a glass bottle consumes water from the source block
+  consume-on-bottle-fill: true
+  # Quanta consumed per bottle out of 8 per full block (3 = ~2-3 bottles per block, 8 = whole block)
+  bottle-volume-cost: 3
+
+  # Allow buckets to scoop partial puddles by gathering adjacent water up to 8 quanta
+  bucket-scoop-partial-volume: true
+
+  # Farmland hydration gradually consumes 1 quantum from adjacent water
+  consume-on-farmland-hydrate: true
+  farmland-consume-chance: 0.18
+
+  # Prevent pointed dripstone from infinitely refilling cauldrons with water
+  disable-dripstone-cauldron-fill: true
+
+  # Slowly evaporate thin 1/8 puddles in hot/dry biomes (desert, badlands, nether)
+  evaporate-thin-puddles-in-dry-biomes: true
+  thin-puddle-evaporate-chance: 0.08
+
+  # Slowly fill exposed terrain depressions during rain (higher CPU cost when enabled)
+  rain-fills-world: false
+  rain-fill-attempts-per-tick: 4
+
+lava:
+  enabled: true
+  # Lava viscosity interval in Overworld/End vs faster flow in the Nether
+  tick-interval: 8
+  nether-tick-interval: 4
+
+  # Finite lava volume without infinite spreading
+  finite-mode: true
+  gravity-enabled: true
+  equalize-enabled: true
+  min-spread-difference: 2
+
+  # Hydrostatic pressure for pressurized magma chambers
+  pressure-enabled: true
+  pressure-max-depth: 12
+  pressure-max-visited: 80
+
+  displace-on-block-place: true
+  displace-on-piston: true
+  break-and-burn-fragile-blocks: true
+  disable-dripstone-cauldron-fill: true
+
+  # Allow buckets to scoop partial lava puddles up to a full block volume
+  bucket-scoop-partial-volume: true
+
+water-lava-interaction:
+  # Interaction mode between water and lava:
+  # PHYSEX_EVAPORATE       - water evaporates on contact and cools thin lava (prevents infinite cobble gens)
+  # CONSUME_WATER_STONE    - forms stone/obsidian only with sufficient mass, consuming water
+  # VANILLA                - standard vanilla cobblestone/stone/obsidian generation
+  mode: PHYSEX_EVAPORATE
+
+  # Spawn hissing sound and steam particles when water evaporates on lava
+  evaporate-effects: true
+
+ice-and-sponge:
+  # Melting ice activates finite simulated water instead of static infinite water
+  melting-ice-creates-finite-water: true
